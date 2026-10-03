@@ -1,0 +1,9 @@
+{
+  "kind": "go",
+  "IMPLEMENTED": "Go DAG validation, deterministic admission order, adapter interface, concurrency limit, atomic journal replacement, conservative interrupted RUNNING -> HOLD recovery, explicit Retryable errors, dependency HOLD propagation, context cancellation, spec-hash binding CLI.",
+  "MEASURED": "See exact-commit receipt, CI artifacts and baseline. Documentation does not substitute for a passing run.",
+  "DESIGNED": "Kubernetes integration and an upstream Argo contribution are not implemented.",
+  "NOT_CLAIMED": "One scheduler owns one journal; no multi-process lock, distributed scheduler, Kubernetes/Argo integration, containers, durable directory fsync on all platforms, leases, remote plugins, untrusted-code isolation, backoff timing, upstream OSS contribution, or production on-call history. Adapters must honor cancellation; a noncooperative adapter can prevent completion. Cancellation does not roll back completed effects. Direct Run callers must bind the workflow spec as the CLI does.",
+  "safe_cv_claim": "Built a Go DAG execution lab with bounded concurrency, adapter contracts, explicit safe retries, cancellation, and conservative journal recovery.",
+  "authorship": "Fresh AI-assisted implementation using synthetic data and public role requirements; no private source used."
+}

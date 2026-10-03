@@ -1,0 +1,5 @@
+[
+  {"id":"extract","adapter":"uppercase","input":"sample invoice","deps":[],"retries":0},
+  {"id":"validate","adapter":"uppercase","input":"schema valid","deps":["extract"],"retries":0},
+  {"id":"summarize","adapter":"uppercase","input":"ready for review","deps":["validate"],"retries":0}
+]
