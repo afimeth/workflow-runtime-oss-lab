@@ -1,0 +1,67 @@
+{
+  "schema": "interview-lab-evidence/v1",
+  "measured_at_utc": "2026-10-03T16:37:04.453857+00:00",
+  "commit_sha": "2d04065f943073a26e948fe7448b295dd0e5437f",
+  "tracked_worktree_dirty": false,
+  "platform": "Windows",
+  "architecture": "AMD64",
+  "toolchain": {
+    "go": "go version go1.27.1 windows/amd64"
+  },
+  "summary": {
+    "tests": 17,
+    "failed": 0
+  },
+  "checks": [
+    {
+      "command": [
+        "go",
+        "version"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e37270413fda49039b4f31dd90726df0e94c163cf9bca2f62fd40a47d12b5db1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "./..."
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "7b493bb7defcdd234806f47579352d514c7815454992f88841bb932fda015f0f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "go",
+        "test",
+        "-bench",
+        "BenchmarkDAG",
+        "-benchtime=5x",
+        "-run",
+        "^$",
+        "./..."
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "b1f3a2e42f71c59ee428ccc2f28f71b5cf2edbcb0725abbae9eff167cbdb93b4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "passed": true,
+  "safe_cv_claim": "Built a Go DAG execution lab with bounded concurrency, adapter contracts, explicit safe retries, cancellation, and conservative journal recovery.",
+  "unsupported_claims": "One scheduler owns one journal; no multi-process lock, distributed scheduler, Kubernetes/Argo integration, containers, durable directory fsync on all platforms, leases, remote plugins, untrusted-code isolation, backoff timing, upstream OSS contribution, or production on-call history. Adapters must honor cancellation; a noncooperative adapter can prevent completion. Cancellation does not roll back completed effects. Direct Run callers must bind the workflow spec as the CLI does.",
+  "ci_run_url": null
+}
