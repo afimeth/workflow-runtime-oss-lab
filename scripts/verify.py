@@ -6,7 +6,7 @@ claims=json.loads(Path('evidence/claims.json').read_text())
 checks=[]
 def run(cmd):
  p=subprocess.run(cmd,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=180)
- checks.append({'command':cmd,'exit_code':p.returncode,'stdout_sha256':hashlib.sha256(p.stdout.encode()).hexdigest(),'stderr_sha256':hashlib.sha256(p.stderr.encode()).hexdigest()})
+ checks.append({'command':[Path(cmd[0]).name,*cmd[1:]],'exit_code':p.returncode,'stdout_sha256':hashlib.sha256(p.stdout.encode()).hexdigest(),'stderr_sha256':hashlib.sha256(p.stderr.encode()).hexdigest()})
  if p.returncode:
   print(p.stdout[-12000:]);print(p.stderr[-6000:]);raise RuntimeError('CHECK_FAILED')
  return p.stdout
