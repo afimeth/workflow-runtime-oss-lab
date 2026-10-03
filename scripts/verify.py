@@ -1,7 +1,7 @@
 """Execute checks and emit an exact-commit measurement. No hard-coded test totals."""
 import datetime,hashlib,json,os,platform,re,subprocess,sys,unittest
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1];os.chdir(ROOT)
+ROOT=Path(__file__).resolve().parents[1];os.chdir(ROOT);sys.path.insert(0,str(ROOT))
 claims=json.loads(Path('evidence/claims.json').read_text())
 checks=[]
 def run(cmd):
@@ -20,19 +20,19 @@ try:
   if not result.wasSuccessful():raise RuntimeError('TESTS_FAILED')
   run([sys.executable,'app.py','demo'])
   if 'durable' in ROOT.name:
-   out=run([sys.executable,'app.py','benchmark']);Path('evidence/benchmark.json').write_text(out)
+   out=run([sys.executable,'app.py','benchmark']);Path('evidence/benchmark.json').write_text(out,encoding='utf-8')
  elif kind=='go':
   tools={'go':run(['go','version']).strip()};events=[json.loads(x) for x in run(['go','test','-json','-count=1','./...']).splitlines() if x.startswith('{')]
   summary={'tests':sum(e.get('Action')=='pass' and 'Test' in e for e in events),'failed':sum(e.get('Action')=='fail' and 'Test' in e for e in events)}
   run(['go','vet','./...'])
   if os.getenv('CI') and platform.system()=='Linux':run(['go','test','-race','-count=1','./...'])
-  bench=run(['go','test','-bench','BenchmarkDAG','-benchtime=5x','-run','^$','./...']);Path('evidence/benchmark.txt').write_text(bench)
+  bench=run(['go','test','-bench','BenchmarkDAG','-benchtime=5x','-run','^$','./...']);Path('evidence/benchmark.txt').write_text(bench,encoding='utf-8')
  elif kind=='forge':
   tools={'forge':run(['forge','--version']).strip(),'solc':'0.8.28','profile':os.getenv('FOUNDRY_PROFILE','default')}
   data=json.loads(run(['forge','test','--json']));results=[(name,r) for s in data.values() for name,r in s['test_results'].items()]
   summary={'reported_tests':len(results),'passed':sum(r['status']=='Success' for _,r in results),'tests':[{ 'name':n,'status':r['status'],'kind':r.get('kind'),'invariant_predicates':r.get('invariant_predicate_results')} for n,r in results]}
   if summary['passed']!=len(results):raise RuntimeError('TESTS_FAILED')
-  run(['forge','snapshot','--snap','evidence/gas-snapshot.txt']);Path('evidence/gas-report.txt').write_text(run(['forge','test','--gas-report']))
+  run(['forge','snapshot','--snap','evidence/gas-snapshot.txt']);Path('evidence/gas-report.txt').write_text(run(['forge','test','--gas-report']),encoding='utf-8')
   run(['forge','script','script/Deploy.s.sol:Deploy'])
  elif kind=='node':
   tools={'node':run(['node','--version']).strip(),'npm':npm('--version').strip()}
