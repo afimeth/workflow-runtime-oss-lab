@@ -15,6 +15,12 @@ python scripts/verify.py
 
 Install Python 3.11+ for the evidence harness. Install Go 1.23+. External paid services are not required.
 
+## Headless click-to-run contract
+
+`go run . workflow.json demo-journal.json` is the runtime entrypoint. Treat it as the headless equivalent of a click-to-run action: provide a workflow object, execute it, and return journal/evidence state.
+
+No UI is required or shipped. A web, IDE, desktop, or other surface can wrap the same runtime later. The runtime contract remains the graph, execution semantics, journal, and receipts rather than a specific interface.
+
 ## Implemented
 
 Go DAG validation, deterministic admission order, adapter interface, concurrency limit, atomic journal replacement, conservative interrupted RUNNING -> HOLD recovery, explicit Retryable errors, dependency HOLD propagation, context cancellation, spec-hash binding CLI.
@@ -34,6 +40,6 @@ Run `python scripts/verify.py` to regenerate ignored local receipts. Benchmark/g
 
 This describes a laboratory project. It does not establish years of experience, a degree, production scale, employer history, CVEs, mainnet ownership, or independent audit credentials.
 
-## Design and interview walkthrough
+## Design and review walkthrough
 
 See [architecture](docs/ARCHITECTURE.md), [limitations](docs/LIMITATIONS.md), and [interview scenarios](docs/INTERVIEW_SCENARIOS.md). All inputs are synthetic. This is a fresh AI-assisted standalone implementation from public requirements; no private source, customer data, credentials or proprietary code was copied. MIT license applies to this lab.
